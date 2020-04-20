@@ -1,9 +1,14 @@
 package charityapp.v2;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Random;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 
-public class Person implements Volunteerable {
+public class Person implements Volunteerable, Serializable {
+	private static final long serialVersionUID = -1931944206571829679L;
 	private static Random rand = new Random();
 	private static int userID;
 	private static ArrayList<Person> users = new ArrayList<>();
@@ -89,6 +94,24 @@ public class Person implements Volunteerable {
 			}
 		}
 		
+	}
+	
+	public void createProfile() 
+	{
+		File file = new File(userID + ".txt");
+		try {
+			file.createNewFile();
+		}
+		catch(Exception e) {
+			System.out.println(e.toString());
+			System.out.println("Profile already exists, please use update profile");
+		}
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+			out.writeObject(this);	
+		}
+		catch(Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 
 }
