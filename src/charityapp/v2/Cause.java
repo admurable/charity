@@ -41,6 +41,8 @@ public class Cause {
 	protected void setCharities(ArrayList<Charity> charities) {
 		this.charities = charities;
 	}
+	
+	
 
 	public Charity getByName(String toGet) {
 		return charities.stream()

@@ -10,7 +10,7 @@ public class International extends Charity {
 	
 	public International(String name, String leader, float percentageToCause,
 			String website, String phoneNumber, boolean isGovernment,
-			HashSet<String> countriesServed, String homeCountry, int members) {
+			HashSet<String> countriesServed, int members, String homeCountry) {
 		super(name, leader, percentageToCause, website, phoneNumber, isGovernment);
 		this.countriesServed = countriesServed;
 		this.homeCountry = homeCountry;

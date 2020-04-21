@@ -35,7 +35,7 @@ public class CharityGUI extends Application {
 	private int clientID = -1;
 	final FileChooser fileChooser = new FileChooser();
 	private Desktop desktop = Desktop.getDesktop();
-	
+
 	// Controls
 		Button btn0 = new Button();
 		Button btn1 = new Button();
@@ -130,7 +130,7 @@ public class CharityGUI extends Application {
 		btn7.setText("BACK");
 		btn9.setText("SAVE PROFILE");
 		profileControlBox.getChildren().addAll(lbl7, btn7, btn9, btn4);
-		
+
 		lbl10.setText("OR Search by charity name:");
 		lbl11.setText("Will ignore other search options.");
 		txt2.setMaxWidth(200);
@@ -176,7 +176,7 @@ public class CharityGUI extends Application {
             	mainPage(mainPane, mainStage);
             }
 		});
-		
+
 		btn8.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
             	File file = fileChooser.showOpenDialog(mainStage);
@@ -215,7 +215,7 @@ public class CharityGUI extends Application {
         textSearchBox.setAlignment(Pos.CENTER_LEFT);
         searchSubmitBox.setAlignment(Pos.TOP_CENTER);
         searchSubmitBox.setPadding(new Insets(30));
-        
+
         btn3.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
             	selectPage(mainPane, mainStage);
@@ -284,8 +284,8 @@ public class CharityGUI extends Application {
             @Override public void handle(ActionEvent e) {
             	loginPage(mainPane, mainStage);
             }
-        });	
-		
+        });
+
 		btn9.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
             	//save profile
@@ -308,5 +308,5 @@ public class CharityGUI extends Application {
                 );
         }
     }
-	
+
 }

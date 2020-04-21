@@ -4,7 +4,7 @@ public class AppTestDriver {
 
 	public static void main(String[] args) {
 		Cause cause = new Cause("All");
-		cause.setCharities(new Generator().generateCharities());
+		cause.setCharities(new fileHandler().getCharities("All"));
 		System.out.println("--- Testing display methods ---");
 		cause.getCharities().forEach(c -> System.out.println(c.display()));
 		System.out.println("\n--- Testing sort by name ---");
