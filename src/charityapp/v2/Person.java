@@ -1,11 +1,9 @@
 package charityapp.v2;
 
+import java.io.*;
 import java.util.ArrayList;
-import java.io.Serializable;
 import java.util.Random;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import java.util.logging.Logger;
 
 public class Person implements Volunteerable, Serializable {
 	private static final long serialVersionUID = -1931944206571829679L;
@@ -14,6 +12,7 @@ public class Person implements Volunteerable, Serializable {
 	private static ArrayList<Person> users = new ArrayList<>();
 	private int id;
 	private ArrayList<Charity> listToVolunteer = new ArrayList<>();
+	private static Logger LOG = Logger.getGlobal();
 
 	public Person(ArrayList<Charity> volunteer) {
 		listToVolunteer = volunteer;
@@ -99,18 +98,14 @@ public class Person implements Volunteerable, Serializable {
 	public void createProfile() 
 	{
 		File file = new File(userID + ".txt");
-		try {
-			file.createNewFile();
-		}
-		catch(Exception e) {
-			System.out.println(e.toString());
-			System.out.println("Profile already exists, please use update profile");
-		}
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
-			out.writeObject(this);	
+			if(file.createNewFile()) {
+				LOG.info("Created new file for ID: " + userID);
+			} else LOG.info("Profile already exists; please use update profile.");
+			out.writeObject(this);
 		}
-		catch(Exception e) {
-			System.out.println(e.toString());
+		catch(IOException e) {
+			e.printStackTrace();
 		}
 	}
 

@@ -148,27 +148,13 @@ public class CharityGUI extends Application {
 		mainPane.setCenter(loginBox);
 		loginBox.setAlignment(Pos.CENTER);
 		loginBox.setVisible(true);
-		
-		btn1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-            	ArrayList<Person> users = Person.getUsers();
-            	if(users.size() != 0) {
-            		boolean found = false;
-	            	for(Person p: Person.getUsers()) {
-	            		if(txt1.getText().equals(p.getId())) {
-	            			found = true;
-	            			clientID = (p.getId());
-	                    	mainPage(mainPane, mainStage);
-	            		}
-	            	}
-	            	if (!found) {
-	            		lbl0.setText("Incorrect ID Entered.");
-	            	}
-            	}
-            	else{
-            		lbl0.setText("No Users Exist. Select 'REGISTER'");
-            	}
-            }
+
+		btn1.setOnAction(action -> {
+			int user = InputChecker.isUser(Integer.parseInt(txt1.getText()));
+			if(user != -1) {
+				clientID = Person.getUsers().get(user).getId();
+				mainPage(mainPane, mainStage);
+			}
 		});
 		
 		btn2.setOnAction(new EventHandler<ActionEvent>() {
