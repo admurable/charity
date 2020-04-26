@@ -1,13 +1,20 @@
 package charityapp.v2;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.logging.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +22,7 @@ public class fileHandler {
 	
 	private HashMap<Charity, String> charities;
 	
+	private static Logger LOG = Logger.getGlobal();
 	
 	private File information;
 	
@@ -143,4 +151,64 @@ public class fileHandler {
 		lineNum++;
 	}
 
+
+	public void serialize(Person profile) 
+	{
+		File file = new File(profile.getId() + ".txt");
+		if(!file.exists()) {
+			try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+				if(file.createNewFile()) {
+					LOG.info("Created new file for ID: " + profile.getId());
+				} else LOG.info("Profile already exists; please use update profile.");
+				out.writeObject(this);
+			}
+			catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			updateFile(file);
+		}
+	}
+	
+	public Person deserialize(String fileName)
+	{
+			try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
+				return (Person) in.readObject();
+			}
+			catch(FileNotFoundException e) {
+				log.warning("File not found: " + LocalDate.now());
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			return new Person();
+		
+	}
+	
+	public void createReport(Charity charity)
+	{
+		String fileName = (LocalDate.now() + ":" + charity.getName() + ".txt");
+		try(BufferedWriter out = new BufferedWriter(new FileWriter(fileName))) {
+			out.write(charity.getName() + " Report: " + LocalDate.now());
+			out.write(charity.display());
+			System.out.println("Hello" + LocalDate.now() + fileName);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+			log.warning("There was an error creating the report");
+		}
+	}
+	
+	public void updateFile(File file)
+	{
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+			out.writeObject(this);
+			LOG.fine("Succesfully updated profile");
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

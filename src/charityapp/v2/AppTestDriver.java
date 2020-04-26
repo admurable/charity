@@ -12,6 +12,8 @@ public class AppTestDriver {
 		cause.getCharities().forEach(c -> System.out.println(c.display()));
 		System.out.println("\n--- Testing get by name ---");
 		System.out.println(cause.getByName("Red Cross").getName());
+		fileHandler l = new fileHandler();
+		l.createReport(cause.getByName("Red Cross"));
 	}
 
 }

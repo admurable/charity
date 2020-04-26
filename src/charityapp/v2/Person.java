@@ -95,18 +95,5 @@ public class Person implements Volunteerable, Serializable {
 		
 	}
 	
-	public void createProfile() 
-	{
-		File file = new File(userID + ".txt");
-		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
-			if(file.createNewFile()) {
-				LOG.info("Created new file for ID: " + userID);
-			} else LOG.info("Profile already exists; please use update profile.");
-			out.writeObject(this);
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 }
